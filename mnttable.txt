@@ -1,2 +1,3 @@
-INCR 1
-DECR 4
+INCR 1 1
+DECR 4 3
+

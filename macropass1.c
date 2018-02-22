@@ -6,6 +6,7 @@ struct MntTableEntry
 {
 	char name[30];
 	int index;
+	int pindex;
 } MNTTable[20];
 
 struct MdtTableEntry
@@ -19,13 +20,14 @@ struct FormalParameterEntry
 	int def;
 	int MNTindex;
 	char type;
+	char actualp[50];
 } FormalParameterTable[20];
 
 int main()
 {
 	FILE * fp1,*fp2,*fp3,*fp4,*fp5;
 	fp1=fopen("input.txt","r");
-	fp2=fopen("toassembler.txt","w");
+	fp2=fopen("pass1out.txt","w");
 	fp3=fopen("mnttable.txt","w");
 	fp4=fopen("mdttable.txt","w");
 	fp5=fopen("parametertable.txt","w");
@@ -77,7 +79,8 @@ int main()
 		if(macroflag1==1)
 		{
 			strcpy(MNTTable[mntcounter].name,token1);
-			MNTTable[mntcounter++].index=mdtcounter;
+			MNTTable[mntcounter].index=mdtcounter;
+			MNTTable[mntcounter++].pindex=formalpcounter;
 			macroflag2=1;
 
 			if(tflag==1)
@@ -91,12 +94,12 @@ int main()
 					if(token2[0]=='&')
 					{
 						FormalParameterTable[formalpcounter].type='p';
-						j=1;
+						
 					}
 					else
 					{
 						FormalParameterTable[formalpcounter].type='k';	
-						j=0;
+						
 					}
 
 
@@ -191,7 +194,7 @@ int main()
 	
 	for(i=1;i<mntcounter;i++)
 		{
-			fprintf(fp3,"%s %d\n",MNTTable[i].name,MNTTable[i].index);
+			fprintf(fp3,"%s %d %d\n",MNTTable[i].name,MNTTable[i].index,MNTTable[i].pindex);
 		}
 
 		
